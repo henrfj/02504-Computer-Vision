@@ -13,6 +13,11 @@ def display_image(path):
 
 # 1.11
 def box3d(n):
+    """
+    Creates a point-box in 3D with a cross in the middle.
+    The box contains n points on each side, and along the cross.
+    Useful for testing the camera model.
+    """
     x = []
     y = []
     z = []
@@ -33,14 +38,13 @@ def box3d(n):
 # EX 1.12 Projection
 def projectpoints(K, R, t, Q):
     """
-    Projects 3D points to the 2D image plane of the camera.
-    
+    Projects 3D points of an object to the 2D image plane of the camera.
     Using homogenous coordinates the process can be done like this:
             p_h = K*[R t]*P_h
 
     Parameters:
-        - K: camera matrix
-        - R, t: pose of camera transformation
+        - K: camera matrix - hold intrinsic camera info like focault distance and principal points
+        - R, t: pose of camera transformation; scale and transport object to the camera plane.
         - Q: 3xn the n 3D points to be projected onto image plane.
     
     Returns: 2xn matrix of projected points
@@ -52,7 +56,7 @@ def projectpoints(K, R, t, Q):
     B = np.vstack((Q, np.ones(len(Q[0]))))
     # Solve the projection in homogenous plane 
     p_h = K@A@B
-    # Translate back to cartesian coordinates and return (divide all by s)
+    # Translate back to cartesian coordinates and return (divide all by s, then remove s)
     return p_h[0:2, :]/p_h[2, :]
 
 if __name__ == "__main__":
