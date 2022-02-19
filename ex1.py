@@ -75,6 +75,7 @@ if __name__ == "__main__":
     t = np.array([[0, 0, 3]]).T
     R = K.copy()
     p = projectpoints(K, R, t, Q)
+    print(Q.shape)
     plt.scatter(p[0,:], p[1,:])
     plt.xlim((-0.5, 0.5))
     plt.ylim((-0.5, 0.5))
